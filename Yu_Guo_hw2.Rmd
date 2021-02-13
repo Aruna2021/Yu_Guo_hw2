@@ -1,0 +1,103 @@
+---
+title: "Yu_Guo_hw2"
+output: word_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(tidyverse)
+library(dplyr)
+library(purrr)
+```
+
+#1) Enter and run USArrests. What type of information is shown in the data table USArrests?  (Three or four sentences) The USArrests data set is a "list" which means it contains different types of variables. It is not an atomic vector which contains the same type of variable. The length of this data set is 4, The variables in this data set are  "double" "integer".
+
+```{r}
+USArrests
+
+typeof(USArrests)
+typeof(USArrests$Murder)
+typeof(USArrests$Assault)
+typeof(USArrests$UrbanPop)
+typeof(USArrests$Rape)
+
+length(USArrests)
+summary(USArrests)
+```
+
+
+
+#2) Use and show R coding that features a map function to show maximum values for all variables of the USArerests data frame.  Which State has the largest number of Assaults according to the USAressts data frame?
+
+```{r}
+USArrests %>%
+  map_dbl(max)
+
+
+USArrests[which(USArrests$Assault == 337), ]
+
+which(grepl(337, USArrests$Assault))
+which(USArrests$Assault == 337, arr.ind = T)
+```
+
+
+
+#3) Install the nycflights13 package: install.packages("nycflights13") , call the following library:  library(nycflights13), and then enter flights (this will produce the flights data table)
+
+```{r}
+library(nycflights13)
+flights
+
+```
+
+#4) Use and show R code that will indicate how many rows and how many columns the flights data has.  Review and revisit your notes from STAT 412/612.  Describe a tibble (two or three sentences). Now use and show R code that verifies that flights is a tibble
+
+```{r}
+
+#tibbles are data frames, the difference between them is tibbles are much older than data frames. tibbles are quite different with matrix, list and vector.
+
+nrow(flights)
+ncol(flights)
+class(flights)
+```
+
+#5) Now Use and show R code (featuring a map function) that will output the type of each column of the flights tibble.
+
+```{r}
+
+output <- vector("list", ncol(nycflights13::flights))
+names(output) <- names(nycflights13::flights)
+for (i in names(output)) {
+  output[[i]] <- class(nycflights13::flights[[i]])
+}
+output
+```
+
+#6)  Use and show R coding that features usage of a map function to find the slope and the intercept of models for the different levels of the Species variable of the iris data frame.  For each model, Sepal.Width predicts Sepal.Length.
+
+```{r}
+
+iris
+
+factor(iris$Species)
+
+models <- iris %>%
+  split(.$Species) %>%    #Sepal.Width predicts Sepal.Length.
+  map(~lm(Sepal.Length ~ Sepal.Width, data = .))
+models
+
+# Now lets get more detailed information for each model.
+
+models %>%
+  map(summary) 
+
+
+```
+
+
+
+
+
+
+
