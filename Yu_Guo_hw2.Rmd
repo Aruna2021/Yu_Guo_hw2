@@ -11,7 +11,7 @@ library(dplyr)
 library(purrr)
 ```
 
-#1) Enter and run USArrests. What type of information is shown in the data table USArrests?  (Three or four sentences) The USArrests data set is a "list" which means it contains different types of variables. It is not an atomic vector which contains the same type of variable. The length of this data set is 4, The variables in this data set are  "double" "integer".
+#1) Enter and run USArrests. What type of information is shown in the data table USArrests?  (Three or four sentences) The USArrests data set is a data frame which shows the arrest rates based on different states.The length of this data set is 4, The variables in this data set are  "double" "integer".
 
 ```{r}
 USArrests
@@ -55,7 +55,8 @@ flights
 
 ```{r}
 
-#tibbles are data frames, the difference between them is tibbles are much older than data frames. tibbles are quite different with matrix, list and vector.
+#Tibbles are a modern take on data frames. They keep the features that have stood the test of time, and drop the features that used to be convenient but are now frustrating (i.e. converting character vectors to factors).
+?tibble
 
 nrow(flights)
 ncol(flights)
@@ -69,7 +70,7 @@ class(flights)
 output <- vector("list", ncol(nycflights13::flights))
 names(output) <- names(nycflights13::flights)
 for (i in names(output)) {
-  output[[i]] <- class(nycflights13::flights[[i]])
+  output[[i]] <- typeof(nycflights13::flights[[i]])
 }
 output
 ```
@@ -95,7 +96,45 @@ models %>%
 
 ```
 
+#7)For the given list above;
+#7a) Use and show R code to find the length of the list
+#7b) Use and show R code that will extract the missing value
+#7c) Use and show R code that will extract the third object
+#7d) Use and show R code that will extract the character string and the minimum number.
+#7e) Use one line of code to show that the seventh object is a character object.
 
+
+```{r}
+V <- list(12, 22, 27, 31.5, NA, 39, "east")
+V
+```
+
+
+```{r}
+length(V)
+```
+
+
+```{r}
+str(V[is.na(V)])
+str(V[[5]])
+```
+
+
+```{r}
+str(V[[3]])
+```
+
+
+```{r}
+
+str(V[c(1,7)])
+```
+
+
+```{r}
+typeof(V[[7]])
+```
 
 
 
